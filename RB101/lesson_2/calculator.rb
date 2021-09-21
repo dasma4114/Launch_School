@@ -3,7 +3,7 @@ def prompt(message)
   puts "=> #{message}"
 end
 
-def valid_number?(num) 
+def valid_number?(num)
   # number validation method
   num.to_i != 0
 end
@@ -34,13 +34,13 @@ loop do
 end
 prompt("Hi, #{name}!")
 
-  # main loop
-loop do 
+# main loop
+loop do
   num1 = nil
   num2 = nil
   operator = nil
   # number validation loop
-  loop do 
+  loop do
     prompt('Enter the first number: ')
     num1 = gets.chomp
 
@@ -52,7 +52,7 @@ loop do
   end
 
   # number validation loop
-  loop do 
+  loop do
     prompt('Enter the second number: ')
     num2 = gets.chomp
 
