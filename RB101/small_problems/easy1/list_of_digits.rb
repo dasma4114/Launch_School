@@ -4,5 +4,5 @@ def digit_list(num)
   numsplit = num.to_s.split(//)
   numsplit.map { |str| str.to_i }
 end
-
+  
 print digit_list(12345)
