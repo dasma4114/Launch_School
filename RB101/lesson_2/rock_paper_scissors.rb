@@ -1,17 +1,9 @@
 VALID_CHOICES = ['rock', 'paper', 'scissors']
 
-def display_results(player, computer)
-  if (player == 'rock' && computer == 'scissors') ||
-    (player == 'paper' && computer == 'rock') ||
-    (player == 'scissors' && computer == 'paper')
-    prompt('You won!')
-  elsif (computer == 'rock' && player == 'scissors') ||
-        (computer == 'paper' && player == 'rock') ||
-        (computer == 'scissors' && player == 'paper')
-    prompt('Computer won!')
-  else
-    prompt('It\'s a tie!')
-  end
+def determine_winner(choice1, choice2)
+  (choice1 == 'rock' && choice2 == 'scissors') ||
+    (choice1 == 'paper' && choice2 == 'rock') ||
+    (choice1 == 'scissors' && choice2 == 'paper')
 end
 
 def prompt(message)
@@ -24,8 +16,8 @@ loop do
   prompt('Welcome to the game!')
 
   loop do
-  prompt("Choose a weapon: #{VALID_CHOICES.join(', ')}.")
-  player_choice = gets.chomp
+    prompt("Choose a weapon: #{VALID_CHOICES.join(', ')}.")
+    player_choice = gets.chomp
 
     if VALID_CHOICES.include?(player_choice)
       break
@@ -38,7 +30,13 @@ loop do
 
   prompt("You chose: #{player_choice}; Computer chose: #{computer_choice}.")
 
-  display_results(player_choice, computer_choice)
+  if determine_winner(player_choice, computer_choice)
+    puts "You won!"
+  elsif determine_winner(computer_choice, player_choice)
+    puts "Computer won!"
+  else
+    puts "It's a tie!"
+  end
 
   prompt('Would you like to play again? (y) to try again. ')
   replay = gets.chomp
