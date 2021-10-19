@@ -32,13 +32,10 @@ loop do
   prompt("You chose: #{player_choice}; Computer chose: #{computer_choice}.")
 
   if determine_winner(player_choice, computer_choice)
-    sleep 2
     puts "You won!"
   elsif determine_winner(computer_choice, player_choice)
-    sleep 2
     puts "Computer won!"
   else
-    sleep 2
     puts "It's a tie!"
   end
 
