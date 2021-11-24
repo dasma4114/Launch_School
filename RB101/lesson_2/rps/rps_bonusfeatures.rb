@@ -52,19 +52,35 @@ def convert_choice(letter)
   end
 end
 
+def determine_winner(choice1, choice2)
+  true if VALID_CHOICES[choice1].include?(choice2)
+end
+
 # main loop
 system 'clear'
 
 prompt(WELCOME_MESSAGE)
 loop do
-  prompt(INSTRUCTIONS)
-  choice = gets.chomp
-  player_choice = convert_choice(choice)
-  if validate_input(player_choice)
-    break
+  loop do
+    prompt(INSTRUCTIONS)
+    choice = gets.chomp
+    player_choice = convert_choice(choice)
+      if validate_input(player_choice)
+        break
+      else
+        prompt("Invalid choice, please try again.")
+      end
+  end
+
+  computer_choice = VALID_CHOICES.keys.sample
+
+  prompt("Player chosen #{player_choice}; Computer chose #{computer_choice}.")
+
+  if determine_winner(player_choice, computer_choice)
+    prompt("You won this round!")
+  elsif determine_winner(computer_choice, player_choice)
+    prompt("Computer won this round!")
   else
-    prompt("Invalid choice, please try again.")
+    prompt("It's a tie! No points awarded.")
   end
 end
-
-computer_choice = VALID_CHOICES.keys.sample
