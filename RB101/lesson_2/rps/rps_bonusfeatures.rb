@@ -30,6 +30,8 @@ MSG
 choice = ''
 player_choice = ''
 computer_choice = ''
+player_score = 0
+computer_score = 0
 
 # show arrow on outputs
 def prompt(message)
@@ -53,7 +55,7 @@ def convert_choice(letter)
 end
 
 def determine_winner(choice1, choice2)
-  true if VALID_CHOICES[choice1].include?(choice2)
+  true if VALID_CHOICES[choice1][:beats].include?(choice2)
 end
 
 # main loop
@@ -78,8 +80,10 @@ loop do
 
   if determine_winner(player_choice, computer_choice)
     prompt("You won this round!")
+    player_score += 1
   elsif determine_winner(computer_choice, player_choice)
     prompt("Computer won this round!")
+    computer_score += 1
   else
     prompt("It's a tie! No points awarded.")
   end
