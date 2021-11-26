@@ -58,33 +58,52 @@ def determine_winner(choice1, choice2)
   true if VALID_CHOICES[choice1][:beats].include?(choice2)
 end
 
+def check_game_winner(score)
+  true if score > 2
+end
+
 # main loop
 system 'clear'
 
 prompt(WELCOME_MESSAGE)
 loop do
   loop do
-    prompt(INSTRUCTIONS)
-    choice = gets.chomp
-    player_choice = convert_choice(choice)
+    loop do
+      prompt(INSTRUCTIONS)
+      choice = gets.chomp
+      player_choice = convert_choice(choice)
       if validate_input(player_choice)
         break
       else
         prompt("Invalid choice, please try again.")
       end
+    end
+
+    computer_choice = VALID_CHOICES.keys.sample
+
+    prompt("Player chosen #{player_choice}; Computer chose #{computer_choice}.")
+
+    if determine_winner(player_choice, computer_choice)
+      prompt("You won this round!")
+      player_score += 1
+    elsif determine_winner(computer_choice, player_choice)
+      prompt("Computer won this round!")
+      computer_score += 1
+    else
+      prompt("It's a tie! No points awarded.")
+    end
+
+    if check_game_winner(player_score)
+      prompt('Congratulations! You won the game!')
+      break
+    elsif check_game_winner(computer_score)
+      prompt('The computer won! Better luck next time!')
+      break
+    end
   end
 
-  computer_choice = VALID_CHOICES.keys.sample
-
-  prompt("Player chosen #{player_choice}; Computer chose #{computer_choice}.")
-
-  if determine_winner(player_choice, computer_choice)
-    prompt("You won this round!")
-    player_score += 1
-  elsif determine_winner(computer_choice, player_choice)
-    prompt("Computer won this round!")
-    computer_score += 1
-  else
-    prompt("It's a tie! No points awarded.")
-  end
+  # check if player wants to replay
+  prompt('Would you like to play again?')
+  replay = gets.chomp
+  break unless replay.downcase.start_with?('y')
 end
