@@ -6,6 +6,8 @@ VALID_CHOICES = {
   'spock' => { shortcut: 'sp', beats: ['rock', 'scissors'] }
 }
 
+VALID_YES_NO = ['yes', 'no', 'y', 'n']
+
 WELCOME_MESSAGE = <<~MSG
   Welcome to rock, paper, scissors, lizard, spock!
   => Remember:
@@ -26,9 +28,9 @@ INSTRUCTIONS = <<~MSG
   => Enter 'sp' for spock.
 MSG
 
+WIN_SCORE = 3
+
 # initializing variables
-choice = ''
-player_choice = ''
 computer_choice = ''
 player_score = 0
 computer_score = 0
@@ -38,9 +40,24 @@ def prompt(message)
   puts "=> #{message}"
 end
 
+def choose_move()
+  choice = ''
+  player_choice = ''
+  loop do
+    choice = gets.chomp
+    player_choice = convert_choice(choice)
+    if valid_move?(player_choice)
+      break
+    else
+      prompt("Invalid choice, please try again.")
+    end
+  end
+  player_choice
+end
+
 # check if input is valid
-def validate_input(input)
-  true if VALID_CHOICES.include?(input)
+def valid_move?(input)
+  VALID_CHOICES.include?(input)
 end
 
 # convert user input to keys of the VALID_CHOICES hash
@@ -54,12 +71,12 @@ def convert_choice(letter)
   end
 end
 
-def determine_winner(choice1, choice2)
-  true if VALID_CHOICES[choice1][:beats].include?(choice2)
+def beats?(choice1, choice2)
+  VALID_CHOICES[choice1][:beats].include?(choice2)
 end
 
-def check_game_winner(score)
-  true if score > 2
+def winner?(score)
+  true if score == WIN_SCORE
 end
 
 # main loop
@@ -68,35 +85,30 @@ system 'clear'
 prompt(WELCOME_MESSAGE)
 loop do
   loop do
-    loop do
-      prompt(INSTRUCTIONS)
-      choice = gets.chomp
-      player_choice = convert_choice(choice)
-      if validate_input(player_choice)
-        break
-      else
-        prompt("Invalid choice, please try again.")
-      end
-    end
-
+    prompt(INSTRUCTIONS)
+    player_choice = choose_move
     computer_choice = VALID_CHOICES.keys.sample
+
+    system 'clear'
 
     prompt("Player chosen #{player_choice}; Computer chose #{computer_choice}.")
 
-    if determine_winner(player_choice, computer_choice)
-      prompt("You won this round!")
+    if beats?(player_choice, computer_choice)
+      prompt("You won the previous round!")
       player_score += 1
-    elsif determine_winner(computer_choice, player_choice)
-      prompt("Computer won this round!")
+    elsif beats?(computer_choice, player_choice)
+      prompt("Computer won the previous round!")
       computer_score += 1
     else
       prompt("It's a tie! No points awarded.")
     end
 
-    if check_game_winner(player_score)
+    prompt("Player = #{player_score}; Computer = #{computer_score}.")
+
+    if winner?(player_score)
       prompt('Congratulations! You won the game!')
       break
-    elsif check_game_winner(computer_score)
+    elsif winner?(computer_score)
       prompt('The computer won! Better luck next time!')
       break
     end
@@ -105,5 +117,10 @@ loop do
   # check if player wants to replay
   prompt('Would you like to play again?')
   replay = gets.chomp
-  break unless replay.downcase.start_with?('y')
+  if VALID_YES_NO.include?(replay)
+    break
+  else
+    prompt('Please enter a valid choice.')
+  end
+  break unless replay == 'yes'
 end
