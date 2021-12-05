@@ -92,12 +92,3 @@ loop do
   display_monthly_pay(loan_amount, monthly_duration, monthly_rate)
   break unless replay?(validate_yes_no)
 end
-
-=begin
-formula:
-m = p * (j / (1 - (1 + j)**(-n)))
-  m = monthly payment
-  p = loan amount
-  j = monthly interest rate
-  n = loan duration in months
-=end
