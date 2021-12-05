@@ -57,13 +57,19 @@ def year_to_month_interest(float)
   (float / 100) / 12
 end
 
+def display_monthly_pay(amount, duration, interest)
+  monthly_pay = amount * (interest / (1 - (1 + interest)**(-duration)))
+  prompt(MESSAGES[:monthly_pay] + '$' + format('%0.2f', monthly_pay))
+end
+
 # main loop
 
 system 'clear'
 prompt(MESSAGES[:welcome])
-get_loan_amount.to_f
-convert_loan_duration(get_loan_duration.to_f)
-year_to_month_interest(get_interest_rate.to_f)
+loan_amount = get_loan_amount.to_f
+monthly_duration = convert_loan_duration(get_loan_duration.to_f)
+monthly_rate = year_to_month_interest(get_interest_rate.to_f)
+display_monthly_pay(loan_amount, monthly_duration, monthly_rate)
 
 =begin
 m = p * (j / (1 - (1 + j)**(-n)))
