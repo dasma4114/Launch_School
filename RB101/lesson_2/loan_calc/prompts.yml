@@ -1,0 +1,5 @@
+:welcome: "Welcome to the Loan Calculator! We'll calculate the monthly payments for you."
+:get_name: "Please enter your name: "
+:loan_amount: "Please enter the loan amount: "
+:loan_duration: "Please enter the length to pay off loan: (Enter in years)"
+:invalid_num: "That's an invalid entry. Please try again."
