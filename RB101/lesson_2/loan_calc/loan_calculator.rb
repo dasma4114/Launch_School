@@ -49,9 +49,26 @@ def get_interest_rate
   end
 end
 
+def convert_loan_duration(num)
+  num * 12
+end
+
+def year_to_month_interest(float)
+  (float / 100) / 12
+end
+
 # main loop
+
 system 'clear'
 prompt(MESSAGES[:welcome])
-get_loan_amount
-get_loan_duration
-get_interest_rate
+get_loan_amount.to_f
+convert_loan_duration(get_loan_duration.to_f)
+year_to_month_interest(get_interest_rate.to_f)
+
+=begin
+m = p * (j / (1 - (1 + j)**(-n)))
+  m = monthly payment
+  p = loan amount
+  j = monthly interest rate
+  n = loan duration in months
+=end

@@ -4,3 +4,4 @@
 :loan_duration: "Please enter the length to pay off loan: (Enter in years)"
 :interest: "Please enter the annual interest rate: (ex. 1.8 for 1.8% interest rate)"
 :invalid_num: "That's an invalid entry. Please try again."
+:retry: "Would you like to calculate another? (y / n)"
