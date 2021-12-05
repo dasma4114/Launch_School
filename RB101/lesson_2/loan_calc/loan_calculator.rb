@@ -36,8 +36,22 @@ def get_loan_duration
   end
 end
 
+def get_interest_rate
+  annual_interest = ''
+  loop do
+    prompt(MESSAGES[:interest])
+    annual_interest = gets.chomp
+    if valid_num?(annual_interest)
+      return annual_interest
+    else
+      prompt(MESSAGES[:invalid_num])
+    end
+  end
+end
+
 # main loop
 system 'clear'
 prompt(MESSAGES[:welcome])
 get_loan_amount
 get_loan_duration
+get_interest_rate
